@@ -1,0 +1,5 @@
+# Entity Models
+
+@"./article.aontu"
+@"./bank.aontu"
+@"./post.aontu"

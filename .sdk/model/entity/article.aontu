@@ -1,0 +1,187 @@
+# Entity: article
+
+main: kit: entity: article: {
+
+  alias: field: {}
+
+  fields: {
+    bodyHtml: {
+      h: "Body Html"
+      n: "bodyHtml"
+      r: true
+      sh: "Page body as HTML."
+      t: "`$STRING`"
+    }
+    canonicalUrl: {
+      h: "Canonical Url"
+      n: "canonicalUrl"
+      r: false
+      t: "`$STRING`"
+    }
+    coverImageUrl: {
+      h: "Cover Image Url"
+      n: "coverImageUrl"
+      r: false
+      t: "`$STRING`"
+    }
+    excerpt: {
+      h: "Excerpt"
+      n: "excerpt"
+      r: false
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    kind: {
+      h: "Kind"
+      n: "kind"
+      r: true
+      t: "`$STRING`"
+    }
+    lang: {
+      h: "Lang"
+      n: "lang"
+      r: true
+      t: "`$STRING`"
+    }
+    metaDescription: {
+      h: "Meta Description"
+      n: "metaDescription"
+      r: true
+      t: "`$STRING`"
+    }
+    publishedAt: {
+      fo: "date-time"
+      h: "Published At"
+      n: "publishedAt"
+      r: false
+      t: "`$STRING`"
+    }
+    slug: {
+      h: "Slug"
+      n: "slug"
+      r: true
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      t: "`$STRING`"
+    }
+    updatedAt: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updatedAt"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    from: {
+      kind: "kind"
+      lang: "lang"
+      slug: "slug"
+    }
+    name: "id"
+    parts: [
+      "kind"
+      "lang"
+      "slug"
+    ]
+    sep: "/"
+  }
+
+  name: "article"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /api/public/cms/pages/{kind}/{lang}/{slug}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "blog"
+                k: "param"
+                n: "kind"
+                or: "kind"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: "en"
+                k: "param"
+                n: "lang"
+                or: "lang"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: "openbanking-cli-guide"
+                k: "param"
+                n: "slug"
+                or: "slug"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/api/public/cms/pages/{kind}/{lang}/{slug}"
+          q: {
+            exist: [
+              "kind"
+              "lang"
+              "slug"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "api"
+            }
+            {
+              lit: "public"
+            }
+            {
+              lit: "cms"
+            }
+            {
+              lit: "pages"
+            }
+            {
+              var: "kind"
+            }
+            {
+              var: "lang"
+            }
+            {
+              var: "slug"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

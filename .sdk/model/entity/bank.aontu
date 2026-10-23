@@ -1,0 +1,222 @@
+# Entity: bank
+
+main: kit: entity: bank: {
+
+  alias: field: {}
+
+  fields: {
+    beta: {
+      h: "Beta"
+      n: "beta"
+      r: true
+      sh: "True when support for this bank is in beta."
+      t: "`$BOOLEAN`"
+    }
+    bic: {
+      h: "Bic"
+      n: "bic"
+      r: true
+      sh: "BIC/SWIFT code; null for some banks."
+      t: "`$STRING`"
+    }
+    bodyHtml: {
+      h: "Body Html"
+      n: "bodyHtml"
+      r: true
+      sh: "Page body as HTML."
+      t: "`$STRING`"
+    }
+    country: {
+      h: "Country"
+      n: "country"
+      r: true
+      sh: "ISO 3166-1 alpha-2 country code."
+      t: "`$STRING`"
+    }
+    facts: {
+      h: "Facts"
+      n: "facts"
+      r: true
+      sh: "One supported bank in the catalogue."
+      t: "`$OBJECT`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    lang: {
+      h: "Lang"
+      n: "lang"
+      r: true
+      t: "`$STRING`"
+    }
+    logo: {
+      h: "Logo"
+      n: "logo"
+      r: true
+      sh: "Site-relative URL of the bank's logo through the /api/public/bank-logo image proxy."
+      t: "`$STRING`"
+    }
+    maximumConsentValidityDays: {
+      h: "Maximum Consent Validity Days"
+      n: "maximumConsentValidityDays"
+      r: true
+      sh: "Longest consent the bank grants, in days (mostly 180)."
+      t: "`$INTEGER`"
+    }
+    metaDescription: {
+      h: "Meta Description"
+      n: "metaDescription"
+      r: true
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      t: "`$STRING`"
+    }
+    officialUrl: {
+      h: "Official Url"
+      n: "officialUrl"
+      r: false
+      sh: "The bank's own website."
+      t: "`$STRING`"
+    }
+    psuTypes: {
+      h: "Psu Types"
+      n: "psuTypes"
+      r: true
+      sh: "Account holder types supported: personal and/or business."
+      t: "`$ARRAY`"
+    }
+    slug: {
+      h: "Slug"
+      n: "slug"
+      r: true
+      sh: "Unique identifier, country prefix plus name."
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "bank"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /api/public/banks"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/api/public/banks"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "api"
+            }
+            {
+              lit: "public"
+            }
+            {
+              lit: "banks"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /api/public/banks/{slug}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "de-fyrst"
+                k: "param"
+                n: "id"
+                or: "slug"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: "en"
+                k: "query"
+                n: "lang"
+                or: "lang"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/api/public/banks/{slug}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              slug: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "api"
+            }
+            {
+              lit: "public"
+            }
+            {
+              lit: "banks"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

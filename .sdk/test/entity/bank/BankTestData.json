@@ -1,0 +1,89 @@
+{
+  "existing": {
+    "bank": {
+      "BANK00": {
+        "beta": true,
+        "bic": "s97",
+        "bodyHtml": "s98",
+        "country": "s99",
+        "facts": {},
+        "id": "BANK00",
+        "lang": "s9c",
+        "logo": "s9d",
+        "maximumConsentValidityDays": 158,
+        "metaDescription": "s9f",
+        "name": "sa0",
+        "officialUrl": "sa1",
+        "psuTypes": [],
+        "slug": "sa3",
+        "title": "sa4"
+      },
+      "BANK01": {
+        "beta": true,
+        "bic": "s12d",
+        "bodyHtml": "s12e",
+        "country": "s12f",
+        "facts": {},
+        "id": "BANK01",
+        "lang": "s132",
+        "logo": "s133",
+        "maximumConsentValidityDays": 308,
+        "metaDescription": "s135",
+        "name": "s136",
+        "officialUrl": "s137",
+        "psuTypes": [],
+        "slug": "s139",
+        "title": "s13a"
+      },
+      "BANK02": {
+        "beta": true,
+        "bic": "s1c3",
+        "bodyHtml": "s1c4",
+        "country": "s1c5",
+        "facts": {},
+        "id": "BANK02",
+        "lang": "s1c8",
+        "logo": "s1c9",
+        "maximumConsentValidityDays": 458,
+        "metaDescription": "s1cb",
+        "name": "s1cc",
+        "officialUrl": "s1cd",
+        "psuTypes": [],
+        "slug": "s1cf",
+        "title": "s1d0"
+      }
+    }
+  },
+  "new": {
+    "bank": {
+      "bank_ref01": {
+        "beta": true,
+        "bic": "s259",
+        "bodyHtml": "s25a",
+        "country": "s25b",
+        "facts": {},
+        "lang": "s25e",
+        "logo": "s25f",
+        "maximumConsentValidityDays": 608,
+        "metaDescription": "s261",
+        "name": "s262",
+        "officialUrl": "s263",
+        "psuTypes": [],
+        "slug": "s265",
+        "title": "s266"
+      }
+    }
+  },
+  "requests": {
+    "GET /api/public/banks": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /api/public/banks/{slug}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

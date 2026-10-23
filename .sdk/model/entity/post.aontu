@@ -1,0 +1,102 @@
+# Entity: post
+
+main: kit: entity: post: {
+
+  alias: field: {}
+
+  fields: {
+    coverImageUrl: {
+      h: "Cover Image Url"
+      n: "coverImageUrl"
+      r: true
+      sh: "Null on every probed post."
+      t: "`$STRING`"
+    }
+    excerpt: {
+      h: "Excerpt"
+      n: "excerpt"
+      r: true
+      t: "`$STRING`"
+    }
+    metaDescription: {
+      h: "Meta Description"
+      n: "metaDescription"
+      r: true
+      t: "`$STRING`"
+    }
+    publishedAt: {
+      fo: "date-time"
+      h: "Published At"
+      n: "publishedAt"
+      r: true
+      t: "`$STRING`"
+    }
+    slug: {
+      h: "Slug"
+      n: "slug"
+      r: true
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  name: "post"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /api/public/cms/posts"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "en"
+                k: "query"
+                n: "lang"
+                or: "lang"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/api/public/cms/posts"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "api"
+            }
+            {
+              lit: "public"
+            }
+            {
+              lit: "cms"
+            }
+            {
+              lit: "posts"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

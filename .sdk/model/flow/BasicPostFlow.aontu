@@ -1,0 +1,22 @@
+# BasicPostFlow
+
+main: kit: flow: BasicPostFlow:
+{
+  entity: "post",
+  kind: "basic",
+  name: "BasicPostFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "post_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPostFlow"
+}

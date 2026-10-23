@@ -1,0 +1,21 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      description: "The keyless, public part of the open-banking.io API: the catalogue of supported EU/EEA banks, per-bank landing pages, and the blog. Knowledge source: the developer page https://open-banking.io/en/developers (which documents only the keyed, X-Api-Key account/transaction API, deliberately left out here), the site's own front-end JavaScript bundles (which reveal the /api/public/* paths), and live GET probes on 2026-10-23. Every response shape below is taken from a live response. Unverified or excluded: /api/public/banks/country/{cc} is referenced by the front end but returned 404 for every country probed (de, DE, se), so it is omitted; /api/public/bank-logo?u=... is an image proxy, not JSON, so it is omitted; bank landing pages exist only for some banks and only in some languages (de-fyrst?lang=de returned 404 while lang=en worked); the set of CMS page kinds other than 'blog' is unknown. The account, transaction, connection and sync endpoints all need an API key and a paid connected account and are not described."
+      servers: [
+        {
+          url: "https://open-banking.io"
+        }
+      ]
+      summary: "The keyless, public part of the open-banking.io API: the catalogue of supported EU/EEA banks, per-bank landing pages, and the blog."
+      title: "Open Banking API"
+      version: "1.0.0"
+      website: "https://open-banking.io"
+    }
+  }
+}
+

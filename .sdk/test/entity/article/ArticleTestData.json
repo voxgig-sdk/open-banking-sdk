@@ -1,0 +1,72 @@
+{
+  "existing": {
+    "article": {
+      "ARTICLE00": {
+        "bodyHtml": "s78",
+        "canonicalUrl": "s79",
+        "coverImageUrl": "s7a",
+        "excerpt": "s7b",
+        "id": "ARTICLE00",
+        "kind": "s7d",
+        "lang": "s7e",
+        "metaDescription": "s7f",
+        "publishedAt": "s80",
+        "slug": "s81",
+        "title": "s82",
+        "updatedAt": "s83"
+      },
+      "ARTICLE01": {
+        "bodyHtml": "sf0",
+        "canonicalUrl": "sf1",
+        "coverImageUrl": "sf2",
+        "excerpt": "sf3",
+        "id": "ARTICLE01",
+        "kind": "sf5",
+        "lang": "sf6",
+        "metaDescription": "sf7",
+        "publishedAt": "sf8",
+        "slug": "sf9",
+        "title": "sfa",
+        "updatedAt": "sfb"
+      },
+      "ARTICLE02": {
+        "bodyHtml": "s168",
+        "canonicalUrl": "s169",
+        "coverImageUrl": "s16a",
+        "excerpt": "s16b",
+        "id": "ARTICLE02",
+        "kind": "s16d",
+        "lang": "s16e",
+        "metaDescription": "s16f",
+        "publishedAt": "s170",
+        "slug": "s171",
+        "title": "s172",
+        "updatedAt": "s173"
+      }
+    }
+  },
+  "new": {
+    "article": {
+      "article_ref01": {
+        "bodyHtml": "s1e0",
+        "canonicalUrl": "s1e1",
+        "coverImageUrl": "s1e2",
+        "excerpt": "s1e3",
+        "kind": "s1e5",
+        "lang": "s1e6",
+        "metaDescription": "s1e7",
+        "publishedAt": "s1e8",
+        "slug": "s1e9",
+        "title": "s1ea",
+        "updatedAt": "s1eb"
+      }
+    }
+  },
+  "requests": {
+    "GET /api/public/cms/pages/{kind}/{lang}/{slug}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

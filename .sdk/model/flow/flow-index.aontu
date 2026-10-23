@@ -1,0 +1,5 @@
+# Flows
+
+@"./BasicArticleFlow.aontu"
+@"./BasicBankFlow.aontu"
+@"./BasicPostFlow.aontu"

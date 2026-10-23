@@ -1,0 +1,33 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 3
+  metrics: count: path: 4
+  metrics: count: method: 4
+
+  entity: article: {
+    path: "/api/public/cms/pages/{kind}/{lang}/{slug}": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: bank: {
+    path: "/api/public/banks": {
+      op: list: method: *GET
+    }
+    path: "/api/public/banks/{slug}": {
+      rename: param: "slug": *"id"
+      op: load: method: *GET
+    }
+  }
+
+  entity: post: {
+    path: "/api/public/cms/posts": {
+      op: list: method: *GET
+    }
+  }
+
+}

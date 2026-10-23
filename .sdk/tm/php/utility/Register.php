@@ -1,0 +1,72 @@
+<?php
+declare(strict_types=1);
+
+// OpenBanking SDK utility registration
+
+require_once __DIR__ . '/../core/UtilityType.php';
+require_once __DIR__ . '/Clean.php';
+require_once __DIR__ . '/Done.php';
+require_once __DIR__ . '/MakeError.php';
+require_once __DIR__ . '/FeatureAdd.php';
+require_once __DIR__ . '/FeatureHook.php';
+require_once __DIR__ . '/FeatureInit.php';
+require_once __DIR__ . '/Fetcher.php';
+require_once __DIR__ . '/MakeFetchDef.php';
+require_once __DIR__ . '/MakeContext.php';
+require_once __DIR__ . '/MakeOptions.php';
+require_once __DIR__ . '/MakeRequest.php';
+require_once __DIR__ . '/MakeResponse.php';
+require_once __DIR__ . '/MakeResult.php';
+require_once __DIR__ . '/MakePoint.php';
+require_once __DIR__ . '/MakeSpec.php';
+require_once __DIR__ . '/MakeUrl.php';
+require_once __DIR__ . '/Param.php';
+require_once __DIR__ . '/PrepareAuth.php';
+require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
+require_once __DIR__ . '/PrepareHeaders.php';
+require_once __DIR__ . '/PrepareMethod.php';
+require_once __DIR__ . '/PrepareParams.php';
+require_once __DIR__ . '/PreparePath.php';
+require_once __DIR__ . '/PrepareQuery.php';
+require_once __DIR__ . '/ResultBasic.php';
+require_once __DIR__ . '/ResultBody.php';
+require_once __DIR__ . '/ResultHeaders.php';
+require_once __DIR__ . '/TransformRequest.php';
+require_once __DIR__ . '/TransformResponse.php';
+
+OpenBankingUtility::setRegistrar(function (OpenBankingUtility $u): void {
+    $u->clean = [OpenBankingClean::class, 'call'];
+    $u->clean_add = [OpenBankingClean::class, 'add'];
+    $u->clean_explain = [OpenBankingDone::class, 'clean_explain'];
+    $u->done = [OpenBankingDone::class, 'call'];
+    $u->make_error = [OpenBankingMakeError::class, 'call'];
+    $u->feature_add = [OpenBankingFeatureAdd::class, 'call'];
+    $u->feature_hook = [OpenBankingFeatureHook::class, 'call'];
+    $u->feature_init = [OpenBankingFeatureInit::class, 'call'];
+    $u->fetcher = [OpenBankingFetcher::class, 'call'];
+    $u->make_fetch_def = [OpenBankingMakeFetchDef::class, 'call'];
+    $u->make_context = [OpenBankingMakeContext::class, 'call'];
+    $u->make_options = [OpenBankingMakeOptions::class, 'call'];
+    $u->make_request = [OpenBankingMakeRequest::class, 'call'];
+    $u->make_response = [OpenBankingMakeResponse::class, 'call'];
+    $u->make_result = [OpenBankingMakeResult::class, 'call'];
+    $u->make_point = [OpenBankingMakePoint::class, 'call'];
+    $u->make_spec = [OpenBankingMakeSpec::class, 'call'];
+    $u->make_url = [OpenBankingMakeUrl::class, 'call'];
+    $u->param = [OpenBankingParam::class, 'call'];
+    $u->prepare_auth = [OpenBankingPrepareAuth::class, 'call'];
+    $u->prepare_body = [OpenBankingPrepareBody::class, 'call'];
+    $u->prepare_headers = [OpenBankingPrepareHeaders::class, 'call'];
+    $u->prepare_method = [OpenBankingPrepareMethod::class, 'call'];
+    $u->prepare_params = [OpenBankingPrepareParams::class, 'call'];
+    $u->prepare_path = [OpenBankingPreparePath::class, 'call'];
+    $u->prepare_query = [OpenBankingPrepareQuery::class, 'call'];
+    $u->graphql_body = [OpenBankingGraphql::class, 'body'];
+    $u->graphql_errors = [OpenBankingGraphql::class, 'errors'];
+    $u->result_basic = [OpenBankingResultBasic::class, 'call'];
+    $u->result_body = [OpenBankingResultBody::class, 'call'];
+    $u->result_headers = [OpenBankingResultHeaders::class, 'call'];
+    $u->transform_request = [OpenBankingTransformRequest::class, 'call'];
+    $u->transform_response = [OpenBankingTransformResponse::class, 'call'];
+});

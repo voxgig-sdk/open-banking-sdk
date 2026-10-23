@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "post": {
+      "POST00": {
+        "coverImageUrl": "s3c",
+        "excerpt": "s3d",
+        "metaDescription": "s3e",
+        "publishedAt": "s3f",
+        "slug": "s40",
+        "title": "s41"
+      },
+      "POST01": {
+        "coverImageUrl": "s78",
+        "excerpt": "s79",
+        "metaDescription": "s7a",
+        "publishedAt": "s7b",
+        "slug": "s7c",
+        "title": "s7d"
+      },
+      "POST02": {
+        "coverImageUrl": "sb4",
+        "excerpt": "sb5",
+        "metaDescription": "sb6",
+        "publishedAt": "sb7",
+        "slug": "sb8",
+        "title": "sb9"
+      }
+    }
+  },
+  "new": {
+    "post": {
+      "post_ref01": {
+        "coverImageUrl": "sf0",
+        "excerpt": "sf1",
+        "metaDescription": "sf2",
+        "publishedAt": "sf3",
+        "slug": "sf4",
+        "title": "sf5"
+      }
+    }
+  },
+  "requests": {
+    "GET /api/public/cms/posts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

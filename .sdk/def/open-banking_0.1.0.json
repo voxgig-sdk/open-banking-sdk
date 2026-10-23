@@ -1,0 +1,408 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Banking API",
+    "version": "1.0.0",
+    "description": "The keyless, public part of the open-banking.io API: the catalogue of supported EU/EEA banks, per-bank landing pages, and the blog. Knowledge source: the developer page https://open-banking.io/en/developers (which documents only the keyed, X-Api-Key account/transaction API, deliberately left out here), the site's own front-end JavaScript bundles (which reveal the /api/public/* paths), and live GET probes on 2026-10-23. Every response shape below is taken from a live response. Unverified or excluded: /api/public/banks/country/{cc} is referenced by the front end but returned 404 for every country probed (de, DE, se), so it is omitted; /api/public/bank-logo?u=... is an image proxy, not JSON, so it is omitted; bank landing pages exist only for some banks and only in some languages (de-fyrst?lang=de returned 404 while lang=en worked); the set of CMS page kinds other than 'blog' is unknown. The account, transaction, connection and sync endpoints all need an API key and a paid connected account and are not described."
+  },
+  "servers": [
+    {
+      "url": "https://open-banking.io"
+    }
+  ],
+  "paths": {
+    "/api/public/banks": {
+      "get": {
+        "operationId": "listBanks",
+        "summary": "List supported banks",
+        "description": "Returns every bank open-banking.io can connect to (about 2,760 on 2026-10-23) as one unpaginated JSON array of roughly 780 KB. Query parameters such as country are ignored.",
+        "responses": {
+          "200": {
+            "description": "All supported banks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bank"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/banks/{slug}": {
+      "get": {
+        "operationId": "getBankProfile",
+        "summary": "Get a bank's landing page",
+        "description": "Returns the marketing landing page for one bank, with the bank's catalogue facts embedded. Not every bank has one; missing pages return 404 with an RFC 9457 problem document.",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Bank slug from listBanks, e.g. de-fyrst.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "de-fyrst"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "Page language. Defaults to en. Probed: en works; de returned 404 for de-fyrst.",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            },
+            "example": "en"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bank's landing page.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankProfile"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No landing page for this bank and language.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/cms/posts": {
+      "get": {
+        "operationId": "listPosts",
+        "summary": "List blog posts",
+        "description": "Returns the blog post summaries for one language, newest first.",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "Language code. The site is published in da, de, en, es, fi, fr, it, nb, nl, pl, pt and sv; en and de were probed.",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            },
+            "example": "en"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blog post summaries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/cms/pages/{kind}/{lang}/{slug}": {
+      "get": {
+        "operationId": "getArticle",
+        "summary": "Get a CMS page",
+        "description": "Returns one CMS page with its full HTML body. Blog posts use kind 'blog' and a slug from listPosts.",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "description": "Page kind. Only 'blog' is verified.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "blog"
+          },
+          {
+            "name": "lang",
+            "in": "path",
+            "required": true,
+            "description": "Language code.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "en"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Page slug, e.g. from listPosts.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "openbanking-cli-guide"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The page.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such page.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Bank": {
+        "type": "object",
+        "description": "One supported bank in the catalogue.",
+        "required": [
+          "name",
+          "country",
+          "logo",
+          "bic",
+          "beta",
+          "psuTypes",
+          "maximumConsentValidityDays",
+          "slug"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Argenta"
+          },
+          "country": {
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 country code.",
+            "example": "BE"
+          },
+          "logo": {
+            "type": "string",
+            "description": "Site-relative URL of the bank's logo through the /api/public/bank-logo image proxy.",
+            "example": "/api/public/bank-logo?u=https%3A%2F%2Fenablebanking.com%2Fbrands%2FBE%2FArgenta%2F"
+          },
+          "bic": {
+            "type": "string",
+            "nullable": true,
+            "description": "BIC/SWIFT code; null for some banks.",
+            "example": "ARSPBE22"
+          },
+          "beta": {
+            "type": "boolean",
+            "description": "True when support for this bank is in beta."
+          },
+          "psuTypes": {
+            "type": "array",
+            "description": "Account holder types supported: personal and/or business.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "personal",
+                "business"
+              ]
+            }
+          },
+          "maximumConsentValidityDays": {
+            "type": "integer",
+            "description": "Longest consent the bank grants, in days (mostly 180).",
+            "example": 180
+          },
+          "slug": {
+            "type": "string",
+            "description": "Unique identifier, country prefix plus name.",
+            "example": "be-argenta"
+          }
+        }
+      },
+      "BankProfile": {
+        "type": "object",
+        "description": "A bank's landing page.",
+        "required": [
+          "slug",
+          "lang",
+          "country",
+          "title",
+          "metaDescription",
+          "bodyHtml",
+          "facts"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string",
+            "example": "de-fyrst"
+          },
+          "lang": {
+            "type": "string",
+            "example": "en"
+          },
+          "country": {
+            "type": "string",
+            "example": "DE"
+          },
+          "title": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "bodyHtml": {
+            "type": "string",
+            "description": "Page body as HTML."
+          },
+          "officialUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The bank's own website. Always present in probes; nullability unverified.",
+            "example": "https://www.fyrst.de"
+          },
+          "facts": {
+            "$ref": "#/components/schemas/Bank"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "description": "Blog post summary.",
+        "required": [
+          "slug",
+          "title",
+          "metaDescription",
+          "excerpt",
+          "coverImageUrl",
+          "publishedAt"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string",
+            "example": "openbanking-cli-guide"
+          },
+          "title": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null on every probed post."
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-17T21:07:00.030005+00:00"
+          }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "description": "A full CMS page.",
+        "required": [
+          "kind",
+          "lang",
+          "slug",
+          "title",
+          "metaDescription",
+          "bodyHtml"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "example": "blog"
+          },
+          "lang": {
+            "type": "string",
+            "example": "en"
+          },
+          "slug": {
+            "type": "string",
+            "example": "openbanking-cli-guide"
+          },
+          "title": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "bodyHtml": {
+            "type": "string",
+            "description": "Page body as HTML."
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "canonicalUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "description": "RFC 9457 problem document returned on 404.",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "traceId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
